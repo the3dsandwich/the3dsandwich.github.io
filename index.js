@@ -29,3 +29,23 @@ if (articleName !== null) {
     "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
   );
 }
+
+fetch(
+  "https://api.github.com/repos/the3dsandwich/the3dsandwich.github.io/git/trees/master?recursive=1"
+).then((res) => {
+  res.json().then(({ tree }) => {
+    const postList = tree.filter(({ path }) =>
+      path.match("contents/[0-9a-zA-z]*.md")
+    );
+    console.log(postList);
+    for (const post of postList) {
+      const postNode = document.createElement("li");
+      const postTitle = post.path.replace("contents/", "").replace(".md", "");
+      const postLink = document.createElement("a");
+      postLink.setAttribute("href", `?articlename=${postTitle}`);
+      postLink.innerHTML = postTitle;
+      postNode.appendChild(postLink);
+      document.getElementById("posts").appendChild(postNode);
+    }
+  });
+});

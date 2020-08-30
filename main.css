@@ -2,18 +2,51 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   font-family: "Noto Sans TC", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.content-container {
-  min-width: 40ch;
-  width: 50%;
-}
+
 header {
   width: 100vw;
   background-color: #eeeeee;
   line-height: 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background-color: #eeeeee;
+  line-height: 5rem;
+}
+
+footer ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
+footer ul li {
+  padding: 0 1rem;
+  min-width: 10ch;
+}
+
+footer ul li:hover {
+  background-color: #cccccc;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.content-container {
+  min-width: 40ch;
+  width: 50%;
 }
