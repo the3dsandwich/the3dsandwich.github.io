@@ -26,29 +26,39 @@
     <div id="content"></div>
     <script>
       const converter = new showdown.Converter();
-      // fetchMDAndDisplay("test.md");
-      fetchExternalMDAndDisplay(
-        "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
-      );
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const articleName = urlParams.get("articlename");
 
-      function fetchExternalMDAndDisplay(uri) {
-        fetch(uri).then((res) => {
-          res.text().then((text) => {
-            const html = converter.makeHtml(text);
-            console.log(html);
-            document.getElementById("content").innerHTML = html;
-          });
-        });
+      if (articleName !== null) {
+        fetchMDAndDisplay(`${articleName}.md`);
+      } else {
+        fetchExternalMDAndDisplay(
+          "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
+        );
+      }
+
+      function fetchExternalMDAndDisplay(linkToFile) {
+        fetch(linkToFile).then(replaceFetchResult).catch(catch404AndDisplay);
       }
 
       function fetchMDAndDisplay(filename) {
-        fetch(`./contents/${filename}`).then((res) => {
-          res.text().then((text) => {
-            const html = converter.makeHtml(text);
-            console.log(html);
-            document.getElementById("content").innerHTML = html;
-          });
+        fetch(`./contents/${filename}`)
+          .then(replaceFetchResult)
+          .catch(catch404AndDisplay);
+      }
+
+      function replaceFetchResult(res) {
+        res.text().then((text) => {
+          const html = converter.makeHtml(text);
+          console.log(html);
+          document.getElementById("content").innerHTML = html;
         });
+      }
+
+      function catch404AndDisplay(e) {
+        console.log(e);
+        // fetchMDAndDisplay("404.md");
       }
     </script>
   </body>
