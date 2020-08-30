@@ -8,54 +8,15 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
     />
+    <link href="main.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: "Noto Sans TC", sans-serif;
-      }
-    </style>
   </head>
+
   <body>
     <header>
       <h1>the3dsandwich</h1>
     </header>
-    <div id="content"></div>
-    <script>
-      const converter = new showdown.Converter();
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const articleName = urlParams.get("articlename");
-
-      if (articleName !== null) {
-        fetchMDAndDisplay(`${articleName}.md`);
-      } else {
-        fetchExternalMDAndDisplay(
-          "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
-        );
-      }
-
-      function fetchExternalMDAndDisplay(linkToFile) {
-        fetch(linkToFile).then(replaceFetchResult);
-      }
-
-      function fetchMDAndDisplay(filename) {
-        fetch(`./contents/${filename}`).then(replaceFetchResult);
-      }
-
-      function replaceFetchResult(res) {
-        if (res.ok) {
-          res.text().then((text) => {
-            const html = converter.makeHtml(text);
-            document.getElementById("content").innerHTML = html;
-          });
-        } else {
-          fetchMDAndDisplay("404.md");
-        }
-      }
-    </script>
+    <div id="content" class="content-container"></div>
+    <script src="index.js"></script>
   </body>
 </html>
