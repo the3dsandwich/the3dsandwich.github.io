@@ -51,7 +51,6 @@
       function replaceFetchResult(res) {
         res.text().then((text) => {
           const html = converter.makeHtml(text);
-          console.log(html);
           document.getElementById("content").innerHTML = html;
         });
       }
