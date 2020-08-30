@@ -8,6 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -22,9 +23,15 @@
     <header>
       <h1>the3dsandwich</h1>
     </header>
+    <div id="content"></div>
     <script>
+      const converter = new showdown.Converter();
+
       fetch("./test-source.md").then((res) => {
-        console.log(res);
+        console.log(res.text);
+        const html = converter.makeHtml(res.text);
+        console.log(html);
+        document.getElementById("content").innerHTML = html;
       });
     </script>
   </body>
