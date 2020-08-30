@@ -26,14 +26,30 @@
     <div id="content"></div>
     <script>
       const converter = new showdown.Converter();
-
-      fetch("./test-source.md").then((res) => {
-        res.text().then((text) => {
-          const html = converter.makeHtml(text);
-          console.log(html);
-          document.getElementById("content").innerHTML = html;
+      // fetchMDAndDisplay("test.md");
+      fetchExternalMDAndDisplay(
+        "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
+      );
+    </script>
+    <script>
+      function fetchExternalMDAndDisplay(uri) {
+        fetch(uri).then((res) => {
+          res.text().then((text) => {
+            const html = converter.makeHtml(text);
+            console.log(html);
+            document.getElementById("content").innerHTML = html;
+          });
         });
-      });
+      }
+      function fetchMDAndDisplay(filename) {
+        fetch(`./contents/${filename}`).then((res) => {
+          res.text().then((text) => {
+            const html = converter.makeHtml(text);
+            console.log(html);
+            document.getElementById("content").innerHTML = html;
+          });
+        });
+      }
     </script>
   </body>
 </html>
