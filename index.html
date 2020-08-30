@@ -28,10 +28,11 @@
       const converter = new showdown.Converter();
 
       fetch("./test-source.md").then((res) => {
-        console.log(res.text);
-        const html = converter.makeHtml(res.text);
-        console.log(html);
-        document.getElementById("content").innerHTML = html;
+        res.text().then((text) => {
+          const html = converter.makeHtml(text);
+          console.log(html);
+          document.getElementById("content").innerHTML = html;
+        });
       });
     </script>
   </body>
