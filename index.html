@@ -39,28 +39,22 @@
       }
 
       function fetchExternalMDAndDisplay(linkToFile) {
-        fetch(linkToFile).then(replaceFetchResult).catch(catch404AndDisplay);
+        fetch(linkToFile).then(replaceFetchResult);
       }
 
       function fetchMDAndDisplay(filename) {
-        fetch(`./contents/${filename}`)
-          .then(replaceFetchResult)
-          .catch(catch404AndDisplay);
+        fetch(`./contents/${filename}`).then(replaceFetchResult);
       }
 
       function replaceFetchResult(res) {
-        res.text().then((text) => {
-          const html = converter.makeHtml(text);
-          document.getElementById("content").innerHTML = html;
-        });
-      }
-
-      function catch404AndDisplay(e) {
-        console.log(e);
-        console.log("statuscode", e.statusCode);
-        console.log("name", e.name);
-        console.log("message", e.message);
-        // fetchMDAndDisplay("404.md");
+        if (res.ok) {
+          res.text().then((text) => {
+            const html = converter.makeHtml(text);
+            document.getElementById("content").innerHTML = html;
+          });
+        } else {
+          fetchMDAndDisplay("404.md");
+        }
       }
     </script>
   </body>
