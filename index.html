@@ -4,9 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>the3dsandwich</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+      }
+    </style>
   </head>
   <body>
-    <h1>FOOOOOOD</h1>
-    <a href="./parrot.html">party</a>
+    <header>
+      <h1>the3dsandwich</h1>
+    </header>
+    <script>
+      fetch("./test-source.md").then((res) => {
+        console.log(res);
+      });
+    </script>
   </body>
 </html>
