@@ -4,11 +4,15 @@ const urlParams = new URLSearchParams(queryString);
 const articleName = urlParams.get("articlename");
 
 function fetchAndDisplay(filename) {
-  fetch(`./articles/${filename}`).then(replaceFetchResult);
+  fetch(
+    `https://raw.githubusercontent.com/the3dsandwich/the3dsandwich.github.io/master/articles/${filename}`
+  ).then(replaceFetchResult);
 }
 
 function fetch404() {
-  fetch(`./contents/404.md`).then(replaceFetchResult);
+  fetch(
+    `https://raw.githubusercontent.com/the3dsandwich/the3dsandwich.github.io/master/contents/404.md`
+  ).then(replaceFetchResult);
 }
 
 function fetchDefault() {
