@@ -3,12 +3,18 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const articleName = urlParams.get("articlename");
 
-function fetchExternalMDAndDisplay(linkToFile) {
-  fetch(linkToFile).then(replaceFetchResult);
+function fetchAndDisplay(filename) {
+  fetch(`./articles/${filename}`).then(replaceFetchResult);
 }
 
-function fetchMDAndDisplay(filename) {
-  fetch(`./contents/${filename}`).then(replaceFetchResult);
+function fetch404() {
+  fetch(`./contents/404.md`).then(replaceFetchResult);
+}
+
+function fetchDefault() {
+  fetch(
+    "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
+  ).then(replaceFetchResult);
 }
 
 function replaceFetchResult(res) {
@@ -18,29 +24,28 @@ function replaceFetchResult(res) {
       document.getElementById("content").innerHTML = html;
     });
   } else {
-    fetchMDAndDisplay("404.md");
+    fetch404();
   }
 }
 
-if (articleName !== null) {
-  fetchMDAndDisplay(`${articleName}.md`);
+// fetch content
+if (articleName !== null && articleName.length > 0) {
+  fetchAndDisplay(`${articleName}.md`);
 } else {
-  fetchExternalMDAndDisplay(
-    "https://raw.githubusercontent.com/the3dsandwich/the3dsandwich/master/README.md"
-  );
+  fetchDefault();
 }
 
+// fetch article list
 fetch(
   "https://api.github.com/repos/the3dsandwich/the3dsandwich.github.io/git/trees/master?recursive=1"
 ).then((res) => {
   res.json().then(({ tree }) => {
     const postList = tree.filter(({ path }) =>
-      path.match("contents/[0-9a-zA-z]*.md")
+      path.match("articles/[0-9a-zA-z]*.md")
     );
-    console.log(postList);
     for (const post of postList) {
       const postNode = document.createElement("li");
-      const postTitle = post.path.replace("contents/", "").replace(".md", "");
+      const postTitle = post.path.replace("articles/", "").replace(".md", "");
       const postLink = document.createElement("a");
       postLink.setAttribute("href", `?articlename=${postTitle}`);
       postLink.innerHTML = postTitle;
