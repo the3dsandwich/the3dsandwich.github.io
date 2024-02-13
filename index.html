@@ -3,27 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>the3dsandwich</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
-      rel="stylesheet"
-    />
-    <link href="main.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+    <title>Party On</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+      }
+    </style>
   </head>
-
   <body>
-    <header>
-      <h1><a href="./">the3dsandwich</a></h1>
-      <span>
-        <input type="text" id="searchbox" />
-        <a href="./">🔍</a>
-      </span>
-    </header>
-    <div id="content" class="content-container"></div>
-    <footer>
-      <ul id="posts"></ul>
-    </footer>
-    <script src="index.js"></script>
+    <div id="parrot"></div>
+    <div id="countdown">Redirecting in 5 seconds</div>
+    <script>
+      const img = document.createElement("img");
+      img.setAttribute(
+        "src",
+        "https://cultofthepartyparrot.com/parrots/hd/parrot.gif"
+      );
+      document.getElementById("parrot").appendChild(img);
+
+      let interval = 5;
+      setInterval(() => {
+        if (interval > 0) {
+          interval--;
+          document.getElementById(
+            "countdown"
+          ).innerHTML = `Redirecting in ${interval} seconds`;
+        }
+        if (interval === 0) {
+          window.location.replace("https://github.com/the3dsandwich");
+        }
+      }, 1000);
+    </script>
   </body>
 </html>
